@@ -1,0 +1,16 @@
+# Python
+Source/__pycache__/
+
+# Environment Variables and Virtual Environments
+.env
+.venv
+
+# User uploads
+src/uploads/*
+!src/uploads/.gitkeep
+
+# IDE specific files
+.vscode/
+
+#My Directories
+/Docs

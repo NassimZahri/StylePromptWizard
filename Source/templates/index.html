@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Image Prompt Generator</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/styles.css') }}"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow-lg">
+                        <div class="card-header bg-primary text-white">
+                            <h1 class="text-center">Image Prompt Generator</h1>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <p class="lead text-center">
+                                    Upload an image or provide an image URL to
+                                    generate a detailed prompt for image
+                                    generation tools.
+                                </p>
+                            </div>
+
+                            <ul
+                                class="nav nav-tabs mb-4"
+                                id="myTab"
+                                role="tablist"
+                            >
+                                <li class="nav-item" role="presentation">
+                                    <button
+                                        class="nav-link active"
+                                        id="upload-tab"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#upload"
+                                        type="button"
+                                        role="tab"
+                                        aria-controls="upload"
+                                        aria-selected="true"
+                                    >
+                                        Upload Image
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button
+                                        class="nav-link"
+                                        id="url-tab"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#url"
+                                        type="button"
+                                        role="tab"
+                                        aria-controls="url"
+                                        aria-selected="false"
+                                    >
+                                        Image URL
+                                    </button>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content" id="myTabContent">
+                                <!-- Upload Image Tab -->
+                                <div
+                                    class="tab-pane fade show active"
+                                    id="upload"
+                                    role="tabpanel"
+                                    aria-labelledby="upload-tab"
+                                >
+                                    <form
+                                        action="{{ url_for('generate_prompt') }}"
+                                        method="post"
+                                        enctype="multipart/form-data"
+                                    >
+                                        <div class="mb-3">
+                                            <label
+                                                for="image"
+                                                class="form-label"
+                                                >Upload Image (Max 16MB)</label
+                                            >
+                                            <input
+                                                class="form-control"
+                                                type="file"
+                                                id="image"
+                                                name="image"
+                                                accept="image/*"
+                                                required
+                                            />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label
+                                                for="style"
+                                                class="form-label"
+                                                >Prompt Style</label
+                                            >
+                                            <select
+                                                class="form-select"
+                                                id="style"
+                                                name="style"
+                                            >
+                                                <option
+                                                    value="detailed"
+                                                    selected
+                                                >
+                                                    Detailed
+                                                </option>
+                                                <option value="midjourney">
+                                                    Midjourney-style
+                                                </option>
+                                                <option value="dalle">
+                                                    DALL-E style
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="d-grid gap-2">
+                                            <button
+                                                type="submit"
+                                                class="btn btn-primary"
+                                            >
+                                                Generate Prompt
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- Image URL Tab -->
+                                <div
+                                    class="tab-pane fade"
+                                    id="url"
+                                    role="tabpanel"
+                                    aria-labelledby="url-tab"
+                                >
+                                    <form
+                                        action="{{ url_for('generate_prompt') }}"
+                                        method="post"
+                                    >
+                                        <div class="mb-3">
+                                            <label
+                                                for="image_url"
+                                                class="form-label"
+                                                >Image URL</label
+                                            >
+                                            <input
+                                                type="url"
+                                                class="form-control"
+                                                id="image_url"
+                                                name="image_url"
+                                                placeholder="https://example.com/image.jpg"
+                                                required
+                                            />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label
+                                                for="style"
+                                                class="form-label"
+                                                >Prompt Style</label
+                                            >
+                                            <select
+                                                class="form-select"
+                                                id="style"
+                                                name="style"
+                                            >
+                                                <option
+                                                    value="detailed"
+                                                    selected
+                                                >
+                                                    Detailed
+                                                </option>
+                                                <option value="midjourney">
+                                                    Midjourney-style
+                                                </option>
+                                                <option value="dalle">
+                                                    DALL-E style
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="d-grid gap-2">
+                                            <button
+                                                type="submit"
+                                                class="btn btn-primary"
+                                            >
+                                                Generate Prompt
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <p class="text-center">
+                                    <a
+                                        href="{{ url_for('api_docs') }}"
+                                        class="link-primary"
+                                        >API Documentation</a
+                                    >
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

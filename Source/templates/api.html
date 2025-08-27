@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>API Documentation - Image Prompt Generator</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/styles.css') }}"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div class="container mt-5 mb-5">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card shadow-lg">
+                        <div class="card-header bg-dark text-white">
+                            <h1 class="text-center">
+                                Image Prompt Generator API
+                            </h1>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <h2>Overview</h2>
+                                <p>
+                                    This API allows you to generate descriptive
+                                    prompts from images that can be used with
+                                    image generation models like DALL-E,
+                                    Midjourney, or Stable Diffusion.
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h2>Endpoints</h2>
+
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h3 class="h5">
+                                            Generate Prompt from Image
+                                        </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <strong>URL:</strong>
+                                            <code>/generate</code><br />
+                                            <strong>Method:</strong>
+                                            <code>POST</code><br />
+                                            <strong>Content-Type:</strong>
+                                            <code>multipart/form-data</code>
+                                        </div>
+
+                                        <h4>Request Parameters</h4>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Parameter</th>
+                                                    <th>Type</th>
+                                                    <th>Required</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>image</td>
+                                                    <td>File</td>
+                                                    <td>
+                                                        Yes (if no image_url)
+                                                    </td>
+                                                    <td>
+                                                        The image file to
+                                                        analyze. Supported
+                                                        formats: PNG, JPG, JPEG,
+                                                        GIF, WEBP
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>image_url</td>
+                                                    <td>String</td>
+                                                    <td>Yes (if no image)</td>
+                                                    <td>
+                                                        A URL pointing to an
+                                                        image to analyze
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>style</td>
+                                                    <td>String</td>
+                                                    <td>No</td>
+                                                    <td>
+                                                        The style of prompt to
+                                                        generate:
+                                                        <ul>
+                                                            <li>
+                                                                <code
+                                                                    >detailed</code
+                                                                >
+                                                                (default):
+                                                                Detailed
+                                                                description of
+                                                                the image
+                                                            </li>
+                                                            <li>
+                                                                <code
+                                                                    >midjourney</code
+                                                                >: Prompt
+                                                                formatted for
+                                                                Midjourney
+                                                            </li>
+                                                            <li>
+                                                                <code
+                                                                    >dalle</code
+                                                                >: Prompt
+                                                                optimized for
+                                                                DALL-E
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <h4>Example Request</h4>
+                                        <pre><code class="language-bash">curl -X POST https://your-api-url/generate \
+    -H "Accept: application/json" \
+    -F "image=@/path/to/image.jpg" \
+    -F "style=midjourney"</code></pre>
+
+                                        <h4>Response</h4>
+                                        <p>
+                                            JSON response with status and
+                                            prompt:
+                                        </p>
+                                        <pre><code class="language-json">{
+    "status": "success",
+    "prompt": "Sleek silver Porsche 911 on coastal highway, dramatic sunset, aerial shot, reflective surface, motion blur, cinematic, professional car photography, ultra detailed, f/2.8 lens --ar 16:9 --v 6"
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <h2>Error Handling</h2>
+                                <p>
+                                    If an error occurs, the API will return a
+                                    JSON response with a status code of 400 or
+                                    500:
+                                </p>
+                                <pre><code class="language-json">{
+    "status": "error",
+    "error": "Error message description"
+}</code></pre>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <a
+                                    href="{{ url_for('index') }}"
+                                    class="btn btn-primary"
+                                    >Back to Generator</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    </body>
+</html>
